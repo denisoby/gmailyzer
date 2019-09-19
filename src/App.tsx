@@ -1,26 +1,15 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Popup } from './components/Popup/Popup';
+import { Dashboard } from './components/Dashboard/Dashboard';
 
 const App: React.FC = () => {
+  let { location } = window;
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {location.hash === '#dashboard' ? <Dashboard></Dashboard> : <Popup></Popup>}
     </div>
   );
-}
+};
 
 export default App;

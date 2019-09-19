@@ -1,0 +1,170 @@
+* {
+  box-sizing: border-box;
+  font-family: "Google Sans", sans-serif;
+}
+
+body {
+  position: relative;
+}
+
+h1 {
+  font-weight: 500;
+  margin: 0;
+  font-size: 21px;
+}
+h2 {
+  font-weight: 500;
+  margin: 0;
+  font-size: 18px;
+}
+
+a {
+  color: #3A7CEC;
+  cursor: pointer;
+}
+
+p {
+  font-size: 14px;
+}
+
+p.label {
+  color: #757575;
+}
+
+.dummy {
+  background-color: #e2e2e2;
+}
+
+.heading{
+  display: flex;
+  align-items: center;
+}
+
+.heading :not(:nth-child(1)){
+  margin-left: 2rem;
+}
+
+.inline {
+  display: flex;
+  align-items: center;
+}
+
+.inline :not(:nth-child(1)){
+  margin-left: 0.75rem;
+}
+
+.inline.actions p {
+  color: #e2e2e2;
+}
+
+.box {
+  padding: 0.75rem;
+  box-shadow: inset 0px 0px 0px 1px #e2e2e2;
+}
+
+.box p {
+  padding: 0;
+  margin: 0;
+  font-weight: 700;
+}
+
+.chamfer-mini {
+  border-radius: 4px;
+}
+
+.chamfer {
+  border-radius: 7px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 2rem;
+  flex-grow: 1;
+  height: 100%;
+  padding-bottom: inherit;
+}
+
+.container .chart {
+  flex: 3;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.container .list {
+  flex: 1;
+  min-height: 180px;
+  overflow-x: auto;
+  align-items: flex-start;
+}
+
+.list .item{
+  flex-shrink: 0;
+}
+
+.item .box {
+  width: 265px;
+  height: 130px;
+  margin: 0px;
+}
+
+.item .box *{
+  margin: 0;
+}
+
+.item .box p {
+  margin-left: 0.25rem;
+  font-weight: 400;
+}
+
+.item .box .inline {
+  align-items: flex-end;
+}
+
+.item .indicator {
+  width: 5px;
+  height: 1.5rem;
+  background-color: #F1B500;
+}
+
+.item .hint {
+  margin: 0;
+  padding-top: 0.5rem;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.red {
+  color: #E33E2B;
+}
+
+.green {
+  color: #64C255;
+}
+
+/* Exension popup specific elements */
+.elevated {
+  background-color: white;
+  box-shadow: 0px 10px 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+.v-space-large {
+  margin-bottom: 2rem
+}
+.v-space-medium {
+  margin-bottom: 0.75rem
+}
+.v-space-small {
+  margin-bottom: 0.25rem
+}
+
+.inline-distributed {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.action {
+  cursor: pointer;
+}
