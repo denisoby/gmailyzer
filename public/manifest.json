@@ -6,7 +6,21 @@
     "default_popup": "index.html"
   },
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["background.js"],
+    "persistent": false
   },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1BoqUxevKsRLLXUnqGIlwtDIz4HWM0P6dBAmZgg1UqOhON6KUJkjU7l8+Aq4Nv13TQSxb+0Ro72YqtLzoMrJlc+wxgJSoQkfJ665x6s9wPjMgwWzO0YjrRnh35ExMmI1g4jpR2j0twEC6xoeAv6mWo3zbqJ31xpaW3TJfxlCU4FlTtPhzMzrydolkWQP6R8bO6D7m3Bw+QmxpgJIzwiWCrAAZMu3I4TDVIC/XEorGUzSzxNhIwK2eIFp1F5yuAVEpg33HGN4Tu0J2Knv95hbsGI6Miqyseo9uS08LUjkvyhqJBqRueRqqxfFHuDwd/aAopzAXReeES6XSSTqzWWlFQIDAQAB",
+  "oauth2": {
+    "client_id": "704394217772-dn12jft8u1i5ga5jtkj3n7vvl292ugtl.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/gmail.readonly",
+      "https://www.googleapis.com/auth/gmail.metadata",
+      "https://www.googleapis.com/auth/userinfo.email"
+    ]
+  },
+  "permissions": [
+    "identity",
+    "storage"
+  ],
   "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'"
 }

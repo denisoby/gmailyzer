@@ -42,3 +42,12 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+### How to set up user authentication for a Chrome Extension using the Chrome Identity API
+https://gist.github.com/raineorshine/970b60902c9e6e04f71d
+https://medium.com/streak-developer-blog/how-to-use-the-gmail-api-in-a-chrome-extension-a272b2405b57
+https://console.developers.google.com/apis/credentials?authuser=0&project=gmailyzer
+
+https://stackoverflow.com/questions/29801366/gmail-rest-api-get-message-function-returns-invalid-historyid
+https://developers.google.com/gmail/api/guides/sync

@@ -73,7 +73,6 @@ export class Dashboard extends React.Component<FormProps, FormState> {
     };
 
     return (
-      <React.Fragment>
         <div className={styles.Dashboard}>
           <div className="heading">
             <h1>Request Aggregator Dashboard</h1>
@@ -91,7 +90,6 @@ export class Dashboard extends React.Component<FormProps, FormState> {
             <FoldersListDetailed requests={requests} />
           </div>
         </div>
-      </React.Fragment>
     );
   }
 }
