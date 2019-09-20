@@ -19,9 +19,9 @@ export class Dashboard extends React.Component<FormProps, FormState> {
       { name: 'Request A', count: 21, change: 3.21 },
       { name: 'Request B', count: 10, change: 3.21 },
       { name: 'Request C', count: 7, change: 3.21 },
-      { name: 'Paid Time Off', count: 187, change: 3.21 },
-      { name: 'Paid Time Off', count: 187, change: 3.21 },
-      { name: 'Paid Time Off', count: 187, change: 3.21 }
+      { name: 'Paid Time Off 2', count: 187, change: 3.21 },
+      { name: 'Paid Time Off 3', count: 187, change: 3.21 },
+      { name: 'Paid Time Off 4', count: 187, change: 3.21 }
     ];
 
     const chartData = {

@@ -24,6 +24,7 @@ export class FoldersListDetailed extends Component<FoldersListDetailedProps> {
         <div className="list inline">
           {this.props.requests.map(({ name, count, change }) => (
             <FoldersListDetailedItem
+              key={name}
               name={name}
               count={count}
               change={change}

@@ -23,7 +23,6 @@ export class Popup extends Component<FormProps, FormState> {
           href="#"
           className="switch"
           onClick={_ => {
-            debugger;
             chrome.tabs.create({
               url: chrome.extension.getURL('index.html') + '#dashboard'
             });

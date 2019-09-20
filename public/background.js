@@ -5,7 +5,6 @@
 //     authToken: 'ya29.GluIBz-rhQ2eOOzv0vuJLvglaUolWGnu7-hLnHAvJ5M0ct7Y-PImBEzacevIaGpjuR2wVQakswbf3UKmEY8gKaCv9MjW4EX4hvJSVzRPQB9BZSCfDP5Em66u5zaH'
 // });
 
-
 let userInfo = {
     "id": "106571555089661937507",
     "email": "dobydennykh@griddynamics.com",
@@ -14,34 +13,39 @@ let userInfo = {
     "hd": "griddynamics.com"
 };
 
-const apiKey = 'AIzaSyB2naQxJKGjAXANETb4UKNQiDCO9c34liI';
+// chrome.storage.local.set({
+//     userInfo: JSON.stringify(userInfo)
+// });
+// const apiKey = 'AIzaSyB2naQxJKGjAXANETb4UKNQiDCO9c34liI';
 
-chrome.storage.local.get(['authToken'], function({authToken}) {
-    alert('2 Value currently is ' + authToken);
-
-    let init = {
-        method: 'GET',
-        async: true,
-        headers: {
-            Authorization: 'Bearer ' + authToken,
-            'Content-Type': 'application/json'
-        },
-        'contentType': 'json'
-    };
-
-    fetch(
-        `https://www.googleapis.com/gmail/v1/users/${userInfo.email}/history&key=${apiKey}`,
-        init)
-        .then((response) => {
-            debugger
-            return response.json();
-        })
-        .then(function(data) {
-            debugger;
-            console.log(data)
-            alert(JSON.stringify(data));
-        });
-});
+// chrome.storage.local.get(['authToken'], function({authToken}) {
+//     alert('3 Value currently is ' + authToken);
+//
+//     let init = {
+//         method: 'GET',
+//         async: true,
+//         headers: {
+//             Authorization: 'Bearer ' + authToken,
+//             'Content-Type': 'application/json'
+//         },
+//         'contentType': 'json'
+//     };
+//
+//     fetch(
+//         // https://www.googleapis.com/gmail/v1/users/dobydennykh%40griddynamics.com/labels?key=[YOUR_API_KEY]
+//         // https://www.googleapis.com/gmail/v1/users/dobydennykh%40griddynamics.com/labels&key=AIzaSyB2naQxJKGjAXANETb4UKNQiDCO9c34liI
+//         `https://www.googleapis.com/gmail/v1/users/${userInfo.email}/labels?key=${apiKey}`,
+//         init)
+//         .then((response) => {
+//             debugger
+//             return response.json();
+//         })
+//         .then(function(data) {
+//             debugger;
+//             console.log(data)
+//             alert(JSON.stringify(data));
+//         });
+// });
 
 
 // alert('ya29.GluIBz-rhQ2eOOzv0vuJLvglaUolWGnu7-hLnHAvJ5M0ct7Y-PImBEzacevIaGpjuR2wVQakswbf3UKmEY8gKaCv9MjW4EX4hvJSVzRPQB9BZSCfDP5Em66u5zaH');
