@@ -5,11 +5,12 @@ import { Dashboard } from './components/Dashboard/Dashboard';
 import { LabelsService } from './services/labels.service';
 import { BaseNetwork } from './services/base-network.class';
 import { Subscription } from 'rxjs';
+import { StartScreen } from './components/StartScreen/StartScreen';
 
 type AppProps = {
   isAuthorized: boolean;
   authToken: string;
-  user: {
+  userInfo: {
     id: string;
     email: string;
     verified_email: boolean;
@@ -26,7 +27,7 @@ class App extends Component<AppProps, AppState> {
 
   state = {
     isAuthorized: false,
-    user: null
+    userInfo: null
   };
 
   get _contentComponent() {
@@ -41,29 +42,45 @@ class App extends Component<AppProps, AppState> {
 
   componentDidMount() {
     this._subscriptions.push(
-      this._network.authLost.subscribe(_ =>
+      this._network.authLost.subscribe(_ => {
         this.setState({
           authToken: '',
-          isAuthorized: false
-        })
-      )
+          isAuthorized: false,
+          userInfo: null
+        });
+      })
     );
 
+    debugger;
     chrome.storage.local.get(
       ['authToken', 'userInfo'],
       ({ authToken, userInfo }) => {
+        try {
+          userInfo = JSON.parse(userInfo);
+        } catch (e) {
+          console.error('Cannot parse user info from localstorage: ', userInfo, e);
+        }
+
+        if (!authToken || !userInfo) {
+          return;
+        }
+
         this.setState({
           authToken,
-          isAuthorized: !!authToken
+          isAuthorized: authToken && userInfo,
+          userInfo
         });
 
         this._network.updateToken(authToken);
         this._network.updateId(userInfo.email);
 
+        debugger;
         this._labelsService.list().then(data => {
           debugger;
           console.log(data);
-          alert('_labelsService: ' + JSON.stringify(data));
+          if (data) {
+            alert('_labelsService: ' + JSON.stringify(data));
+          }
         });
       }
     );
@@ -74,11 +91,53 @@ class App extends Component<AppProps, AppState> {
   }
 
   render() {
-    let componentToDisplay = this.state.isAuthorized
-      ? null
-      : this._contentComponent;
+    let componentToDisplay = this.state.isAuthorized ? (
+      this._contentComponent
+    ) : (
+      <StartScreen doLogin={() => this._doLogin()} />
+    );
 
-    return <div className="App">{}</div>;
+    return <div className="App">{componentToDisplay}</div>;
+  }
+
+  private _doLogin() {
+    chrome.identity.getAuthToken(
+      {
+        interactive: true
+      },
+      token => {
+        if (chrome.runtime.lastError) {
+          alert(chrome.runtime.lastError.message);
+          return;
+        }
+
+        this._getUserInfo(token).then(userInfo => {
+          // todo through background script - do open extension popup
+          this.setState({
+            authToken: token,
+            isAuthorized: true,
+            userInfo
+          });
+
+          chrome.storage.local.set({
+            userInfo: JSON.stringify(userInfo),
+            authToken: token
+          });
+        });
+      }
+    );
+  }
+
+  private _getUserInfo(token: string) {
+    return new Promise(resolve => {
+      const x = new XMLHttpRequest();
+      x.open(
+        'GET',
+        `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${token}`
+      );
+      x.onload = _ => resolve(JSON.parse(x.response));
+      x.send();
+    });
   }
 }
 

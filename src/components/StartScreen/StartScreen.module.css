@@ -1,0 +1,11 @@
+.StartScreen {
+    /* copied from popup, todo - move to scss variables */
+    height: 475px;
+    width: 380px;
+    padding: 2rem;
+    /* copy end */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
