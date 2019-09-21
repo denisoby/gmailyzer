@@ -3,6 +3,7 @@ import { Observable, Subject } from 'rxjs';
 
 export class BaseNetwork {
   private _authLostSubject = new Subject<void>();
+  private _authObtainedSubject = new Subject<void>();
 
   get initObject() {
     return {
@@ -17,13 +18,14 @@ export class BaseNetwork {
     return this._authLostSubject.asObservable();
   }
 
-  constructor(private _token?: string, private _id?: string) {}
-
-  updateToken(token: string) {
-    this._token = token;
+  get authObtained(): Observable<void> {
+    return this._authObtainedSubject.asObservable();
   }
 
-  updateId(id: string) {
+  constructor(private _token?: string, private _id?: string) {}
+
+  updateTokenAndId(token: string, id: string) {
+    this._token = token;
     this._id = id;
   }
 
