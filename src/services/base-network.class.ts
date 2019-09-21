@@ -6,13 +6,10 @@ export class BaseNetwork {
 
   get initObject() {
     return {
-      method: 'GET',
-      async: true,
       headers: {
         Authorization: 'Bearer ' + this._token,
         'Content-Type': 'application/json'
-      },
-      contentType: 'json'
+      }
     };
   }
 

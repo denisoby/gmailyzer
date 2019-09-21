@@ -58,7 +58,11 @@ class App extends Component<AppProps, AppState> {
         try {
           userInfo = JSON.parse(userInfo);
         } catch (e) {
-          console.error('Cannot parse user info from localstorage: ', userInfo, e);
+          console.error(
+            'Cannot parse user info from localstorage: ',
+            userInfo,
+            e
+          );
         }
 
         if (!authToken || !userInfo) {
@@ -129,15 +133,10 @@ class App extends Component<AppProps, AppState> {
   }
 
   private _getUserInfo(token: string) {
-    return new Promise(resolve => {
-      const x = new XMLHttpRequest();
-      x.open(
-        'GET',
-        `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${token}`
-      );
-      x.onload = _ => resolve(JSON.parse(x.response));
-      x.send();
-    });
+    return fetch(
+      `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${token}`,
+      this._network.initObject
+    ).then(response => response.json());
   }
 }
 
