@@ -100,7 +100,6 @@ class App extends Component<AppProps, AppState> {
     });
 
     const dataSubscription = dataStream.subscribe(({ value, status }) => {
-      debugger;
       this.setState({
         data: value,
         status

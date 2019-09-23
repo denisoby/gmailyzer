@@ -92,8 +92,6 @@ export class DataProviderService {
     valueSelector: () => DataRequestValue,
     messageChecker: (message: any) => MessageListDecision
   ): Observable<DataRequestValueAndStatus> {
-    debugger;
-
     const dataSubject = new Subject<DataRequestValueAndStatus>();
     const self = this;
 
@@ -106,9 +104,9 @@ export class DataProviderService {
     });
 
     function getMessagesList(pageToken: string = '') {
+      // todo find why messages duplicates ???
       self._messagesService.list().then(({ messages, nextPageToken }) => {
         return getNextMessageMetadata({ messages, nextPageToken });
-        debugger;
       });
     }
 
@@ -120,28 +118,33 @@ export class DataProviderService {
         const data = valueSelector();
         const whatToDoNext = messageChecker(message);
         if (whatToDoNext.include) {
-          message.labelIds.forEach((label: string) => {
-            if (data.labels[label]) {
-              const newData = {
-                ...data
-              };
-              newData.labels[label].count++;
-              dataSubject.next({
-                value: newData
-              });
-            }
-          });
+          updateLabelsCount(message, data);
         }
         if (whatToDoNext.continueProcessing) {
-          if (index < messages.length) {
+          const nextIndex = index + 1;
+          if (nextIndex < messages.length) {
             return getNextMessageMetadata(
-              { messages, nextPageToken },
-              index + 1
+                {messages, nextPageToken},
+                nextIndex
             );
           } else {
             //todo get next messages page
             alert('todo get next messages page');
           }
+        }
+      });
+    }
+
+    function updateLabelsCount(message: any, data: any) {
+      message.labelIds.forEach((label: string) => {
+        if (data.labels[label]) {
+          const newData = {
+            ...data
+          };
+          newData.labels[label].count++;
+          dataSubject.next({
+            value: newData
+          });
         }
       });
     }

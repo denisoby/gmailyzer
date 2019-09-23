@@ -48,7 +48,6 @@ export class BaseNetwork {
         // .catch(err => {
         //   // todo handle network errors
         //   err;
-        //   debugger;
         // })
         .then(response => {
           if (response.status === 401) {
