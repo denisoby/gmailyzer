@@ -30,8 +30,8 @@ export class Dashboard extends React.Component<DashboardProps, FormState> {
     );
 
     const groupedCount = this.props.groupedCount || {};
-    const chartLabels = Object.keys(groupedCount);
-    const chartValues = Object.values(groupedCount);
+    const chartLabels = Object.keys(groupedCount).reverse();
+    const chartValues = Object.values(groupedCount).reverse();
     debugger;
 
     const chartData = {
