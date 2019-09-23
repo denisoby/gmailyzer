@@ -29,10 +29,20 @@ export class BaseNetwork {
     this._id = id;
   }
 
-  fetch(url: string) {
+  fetch(url: string, params?: {[name: string]: any}) {
+    params = {
+      key: API_KEY,
+      ...params
+    };
+
+    const paramsSerialized = Object.entries(params)
+        .filter(([key, value]) => !!value)
+        .map((keyValue: (string|number)[]) => keyValue.join('='))
+        .join('&');
+
     return (
       fetch(
-        `https://www.googleapis.com/gmail/v1/users/${this._id}/${url}?key=${API_KEY}`,
+        `https://www.googleapis.com/gmail/v1/users/${this._id}/${url}?${paramsSerialized}`,
         this.initObject
       )
         // .catch(err => {

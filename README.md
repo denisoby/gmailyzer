@@ -51,3 +51,10 @@ https://console.developers.google.com/apis/credentials?authuser=0&project=gmaily
 
 https://stackoverflow.com/questions/29801366/gmail-rest-api-get-message-function-returns-invalid-historyid
 https://developers.google.com/gmail/api/guides/sync
+
+
+### IU updates
+- refresh button
+- sorting folders
+- sign out
+- progress bar

@@ -99,8 +99,8 @@ class App extends Component<AppProps, AppState> {
       dateTo: 'today'
     });
 
-    debugger;
     const dataSubscription = dataStream.subscribe(({ value, status }) => {
+      debugger;
       this.setState({
         data: value,
         status
