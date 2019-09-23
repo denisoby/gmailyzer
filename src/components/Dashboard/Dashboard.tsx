@@ -14,17 +14,23 @@ export class Dashboard extends React.Component<DashboardProps, FormState> {
   render() {
     const periodCount = 123;
 
-    const requests = [
-      { name: 'Paid Time Off', count: 187, change: 3.21 },
-      { name: 'Subscription Reimbursement', count: 86, change: -11.03 },
-      { name: 'Budget Approval', count: 38, change: 6.95 },
-      { name: 'Request A', count: 21, change: 3.21 },
-      { name: 'Request B', count: 10, change: 3.21 },
-      { name: 'Request C', count: 7, change: 3.21 },
-      { name: 'Paid Time Off 2', count: 187, change: 3.21 },
-      { name: 'Paid Time Off 3', count: 187, change: 3.21 },
-      { name: 'Paid Time Off 4', count: 187, change: 3.21 }
-    ];
+    const requests = Object.entries(this.props.labels).reduce(
+      (acc: any, [labelId, label]) =>
+        label.count
+          ? [
+              ...acc,
+              {
+                ...label,
+                change: (
+                  30 *
+                  Math.random() *
+                  (Math.random() > 0.5 ? -1 : 1)
+                ).toFixed(2)
+              }
+            ]
+          : acc,
+      []
+    );
 
     const chartData = {
       labels: [
