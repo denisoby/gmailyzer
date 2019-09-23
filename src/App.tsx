@@ -22,6 +22,7 @@ type AppState = {
         groupedCount: {[index: string]: number;}
       };
     };
+    groupedCount: {[index: string]: number;}
   };
   status: any;
 };
@@ -39,7 +40,8 @@ class App extends Component<AppProps, AppState> {
     authToken: '',
     userInfo: null,
     data: {
-      labels: {}
+      labels: {},
+      groupedCount: {}
     },
     status: null
   };

@@ -43,13 +43,14 @@ export class DataProviderService {
 
   constructor(private _network: BaseNetwork) {}
 
-  get stream(): Observable<any> {
-    return this._stream.asObservable().pipe(debounceTime(200));
-  }
+  // get stream(): Observable<any> {
+  //   return this._stream.asObservable().pipe(debounceTime(500));
+  // }
 
   request(params: DataRequestParams): Observable<DataRequestValueAndStatus> {
     // todo if request already exist
-    return this._getDataFromServer(params);
+    return this._getDataFromServer(params)
+        //.pipe(debounceTime(200));
   }
 
   private _getDataFromServer(
@@ -135,7 +136,7 @@ export class DataProviderService {
             );
           } else {
             //todo get next messages page
-            alert('todo get next messages page');
+            // alert('todo get next messages page');
           }
         }
       });
@@ -152,6 +153,11 @@ export class DataProviderService {
             const groupedCount = newData.labels[label].groupedCount;
             groupedCount[groupBy] = groupedCount[groupBy] || 0;
             groupedCount[groupBy]++;
+
+            newData.groupedCount = newData.groupedCount || {};
+            const globalGroupedCount = newData.groupedCount;
+            globalGroupedCount[groupBy] = globalGroupedCount[groupBy] || 0;
+            globalGroupedCount[groupBy]++
           }
           dataSubject.next({
             value: newData

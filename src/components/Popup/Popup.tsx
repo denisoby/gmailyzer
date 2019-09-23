@@ -5,13 +5,14 @@ import { PeriodSelector } from '../PeriodSelector/PeriodSelector';
 
 // todo future typing
 type PopupProps = {
-    labels: any
+    labels: any;
+    groupedCount: {[index: string]: number}
 };
 type FormState = {};
 
 export class Popup extends Component<PopupProps, FormState> {
   render() {
-    const periodCount = 123;
+      const periodCount = Object.values(this.props.groupedCount || {}).reduce((acc, item) => acc + item, 0);
 
     return (
       <div className={`${styles.Popup} container elevated chamfer`}>
