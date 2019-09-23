@@ -17,7 +17,8 @@ export class LabelsService {
         [item.id]: {
           id: item.id,
           name: item.name,
-          count: 0
+          count: 0,
+          groupedCount: {}
         },
         ...acc
       }) : acc),

@@ -18,7 +18,8 @@ type AppState = {
       [id: string]: {
         id: string;
         name: string;
-        count: number
+        count: number;
+        groupedCount: {[index: string]: number;}
       };
     };
   };

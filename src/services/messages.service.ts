@@ -21,7 +21,9 @@ export class MessagesService {
         const cachedMessage = info[cachedId];
         // todo remove debug
         if (cachedMessage) {
-          resolve(JSON.parse(cachedMessage));
+          const message = JSON.parse(cachedMessage);
+          message.internalDate = +message.internalDate;
+          resolve(message);
           return;
         }
 
@@ -46,7 +48,7 @@ export class MessagesService {
     return {
       id: message.id,
       labelIds: message.labelIds,
-      internalDate: message.internalDate
+      internalDate: +message.internalDate
     };
   }
 

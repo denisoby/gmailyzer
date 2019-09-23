@@ -3,10 +3,12 @@ import { Observable, Subject, from, concat } from 'rxjs';
 import { debounceTime, map, tap } from 'rxjs/operators';
 import { LabelsService } from './labels.service';
 import { MessagesService } from './messages.service';
+import dayjs from "dayjs";
 
 export interface MessageListDecision {
   include: boolean;
   continueProcessing: boolean;
+  groupBy: string;
 }
 
 export interface DataRequestParams {
@@ -62,10 +64,14 @@ export class DataProviderService {
 
     const dataObservable = concat(
       this._getLabelsStep(dataSelector),
-      this._getMessagesStep(dataSelector, message => ({
-        include: true,
-        continueProcessing: messagesCounter++ <= messagesInBatch
-      }))
+      this._getMessagesStep(dataSelector, message => {
+        return {
+          include: true,
+          // todo handle continueProcessing correctly
+          continueProcessing: messagesCounter++ <= messagesInBatch,
+          groupBy: dayjs(message.internalDate).format('YYYY-MM-DD')
+        };
+      })
     );
 
     dataObservable.subscribe(
@@ -118,7 +124,7 @@ export class DataProviderService {
         const data = valueSelector();
         const whatToDoNext = messageChecker(message);
         if (whatToDoNext.include) {
-          updateLabelsCount(message, data);
+          updateLabelsCount(message, data, whatToDoNext.groupBy);
         }
         if (whatToDoNext.continueProcessing) {
           const nextIndex = index + 1;
@@ -135,13 +141,18 @@ export class DataProviderService {
       });
     }
 
-    function updateLabelsCount(message: any, data: any) {
+    function updateLabelsCount(message: any, data: any, groupBy?: string) {
       message.labelIds.forEach((label: string) => {
         if (data.labels[label]) {
           const newData = {
             ...data
           };
           newData.labels[label].count++;
+          if (groupBy) {
+            const groupedCount = newData.labels[label].groupedCount;
+            groupedCount[groupBy] = groupedCount[groupBy] || 0;
+            groupedCount[groupBy]++;
+          }
           dataSubject.next({
             value: newData
           });
