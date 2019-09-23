@@ -4,10 +4,12 @@ import { FoldersList } from '../FoldersList/FoldersList';
 import { PeriodSelector } from '../PeriodSelector/PeriodSelector';
 
 // todo future typing
-type FormProps = {};
+type PopupProps = {
+    labels: any
+};
 type FormState = {};
 
-export class Popup extends Component<FormProps, FormState> {
+export class Popup extends Component<PopupProps, FormState> {
   render() {
     const periodCount = 123;
 
@@ -18,7 +20,7 @@ export class Popup extends Component<FormProps, FormState> {
           <img src="./img/cross.svg" className="action close"></img>
         </div>
         <PeriodSelector periodCount={periodCount} />
-        <FoldersList></FoldersList>
+        <FoldersList folders={this.props.labels}></FoldersList>
         <a
           href="#"
           className="switch"

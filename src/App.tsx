@@ -2,40 +2,54 @@ import React, { Component } from 'react';
 import './App.css';
 import { Popup } from './components/Popup/Popup';
 import { Dashboard } from './components/Dashboard/Dashboard';
-import { LabelsService } from './services/labels.service';
 import { BaseNetwork } from './services/base-network.class';
 import { Subscription } from 'rxjs';
 import { StartScreen } from './components/StartScreen/StartScreen';
 import { UserInfo } from './types/google-apis';
 import { AuthorizationService } from './services/authorization.service';
+import { DataProviderService } from './services/data-provider.service';
 
 type AppState = {
   authToken: string;
   userInfo: UserInfo | null;
   isAuthorized: boolean;
+  data: {
+    labels: {
+      [id: string]: {
+        id: string;
+        name: string;
+        count: number
+      };
+    };
+  };
+  status: any;
 };
 
 type AppProps = {};
 
 class App extends Component<AppProps, AppState> {
   _network = new BaseNetwork();
-  _labelsService = new LabelsService(this._network);
   _authorizationService = new AuthorizationService(this._network);
+  _dataProviderService = new DataProviderService(this._network);
   _subscriptions: Subscription[] = [];
 
   state = {
     isAuthorized: false,
     authToken: '',
-    userInfo: null
+    userInfo: null,
+    data: {
+      labels: {}
+    },
+    status: null
   };
 
   get _contentComponent() {
     let { location } = window;
 
     return location.hash === '#dashboard' ? (
-      <Dashboard></Dashboard>
+      <Dashboard {...this.state.data}></Dashboard>
     ) : (
-      <Popup></Popup>
+      <Popup {...this.state.data}></Popup>
     );
   }
 
@@ -48,7 +62,6 @@ class App extends Component<AppProps, AppState> {
       this._network.authLost.subscribe(_ => this._setLoginState('', null))
     );
 
-    debugger;
     this._authorizationService
       .getAuthFromLocalStorage()
       .then(({ authToken, userInfo }) =>
@@ -81,17 +94,23 @@ class App extends Component<AppProps, AppState> {
   }
 
   private _updateData() {
-    this._labelsService.list().then(data => {
-      debugger;
-      console.log(data);
-      if (data) {
-        alert('_labelsService: ' + JSON.stringify(data));
-      }
+    const dataStream = this._dataProviderService.request({
+      dateFrom: 'today',
+      dateTo: 'today'
     });
+
+    debugger;
+    const dataSubscription = dataStream.subscribe(({ value, status }) => {
+      this.setState({
+        data: value,
+        status
+      });
+    });
+
+    this._subscriptions.push(dataSubscription);
   }
 
   private _doLogin() {
-    debugger;
     this._authorizationService
       .doLogin()
       .then(({ authToken, userInfo }) =>

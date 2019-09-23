@@ -5,10 +5,12 @@ import ChartComponent, { Doughnut, Line } from 'react-chartjs-2';
 import styles from './Dashboard.module.css';
 
 // todo future typing
-type FormProps = {};
+type DashboardProps = {
+  labels: any;
+};
 type FormState = {};
 
-export class Dashboard extends React.Component<FormProps, FormState> {
+export class Dashboard extends React.Component<DashboardProps, FormState> {
   render() {
     const periodCount = 123;
 
@@ -73,23 +75,23 @@ export class Dashboard extends React.Component<FormProps, FormState> {
     };
 
     return (
-        <div className={styles.Dashboard}>
-          <div className="heading">
-            <h1>Request Aggregator Dashboard</h1>
-            <PeriodSelector periodCount={periodCount} />
-          </div>
-          <div className="container">
-            <div className="chart">
-              <Line
-                data={chartData}
-                options={chartOptions}
-                height={500}
-                width={1000}
-              />
-            </div>
-            <FoldersListDetailed requests={requests} />
-          </div>
+      <div className={styles.Dashboard}>
+        <div className="heading">
+          <h1>Request Aggregator Dashboard</h1>
+          <PeriodSelector periodCount={periodCount} />
         </div>
+        <div className="container">
+          <div className="chart">
+            <Line
+              data={chartData}
+              options={chartOptions}
+              height={500}
+              width={1000}
+            />
+          </div>
+          <FoldersListDetailed requests={requests} />
+        </div>
+      </div>
     );
   }
 }

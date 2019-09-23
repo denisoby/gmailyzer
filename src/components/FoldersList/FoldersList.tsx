@@ -2,15 +2,17 @@ import React from 'react';
 import { FoldersListItem } from '../FoldersListItem/FoldersListItem';
 
 // todo future typing
-type FormProps = {};
+type FoldersListProps = {
+    folders: {
+        name: string;
+        count: number;
+    }[]
+};
 type FormState = {};
 
-export class FoldersList extends React.Component<FormProps, FormState> {
+export class FoldersList extends React.Component<FoldersListProps, FormState> {
   render() {
-    const items = new Array(5).fill(null).map((_, i) => ({
-      name: 'Paid Time off ' + i,
-      count: 382
-    }));
+    const items = Object.values(this.props.folders || {});
 
     return (
       <React.Fragment>
